@@ -1,12 +1,15 @@
+// ignore_for_file: must_be_immutable
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:task_application/models/storage_item.dart';
+import 'package:task_application/models/storage_phone_item.dart';
 import '../services/storage_service.dart';
 import '../widgets/edit_data.dart';
+import '../services/storage_phone_service.dart';
 
 class VaultCard extends StatefulWidget {
-  StorageItem item;
-
   VaultCard({required this.item, Key? key}) : super(key: key);
+  StorageItem item;
 
   @override
   State<VaultCard> createState() => _VaultCardState();
@@ -14,8 +17,13 @@ class VaultCard extends StatefulWidget {
 
 class _VaultCardState extends State<VaultCard> {
   bool _visibility = true;
+  List iconList = [Icons.audiotrack, Icons.favorite, Icons.beach_access];
+  var colorList = [Colors.pink, Colors.green, Colors.blue];
+  int rn = Random().nextInt(1000) % 3;
 
   final StorageService _storageService = StorageService();
+
+  final StorageServicesPhone _phoneService = StorageServicesPhone();
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +58,23 @@ class _VaultCardState extends State<VaultCard> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              leading: const Icon(Icons.security, size: 30),
+              leading: Icon(iconList[rn], color: colorList[rn], size: 30),
               trailing: IconButton(
-                icon: const Icon(Icons.edit),
+                icon: Icon(
+                  Icons.edit,
+                  color: Colors.green.shade800,
+                ),
                 onPressed: () async {
                   final String updatedValue = await showDialog(
                       context: context,
                       builder: (_) => EditDataDialog(item: widget.item));
                   if (updatedValue.isNotEmpty) {
-                    // 2
+                    final StoragePhone phoneItem =
+                        StoragePhone(widget.item.key, 'Yes');
+                    _phoneService.writeSecureData(phoneItem.phone).catchError(
+                        (onError) =>
+                            debugPrint("inside vault")); //?? phone addition
+
                     _storageService
                         .writeSecureData(
                             StorageItem(widget.item.key, updatedValue))

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_application/models/storage_phone_item.dart';
+import 'package:task_application/services/storage_phone_service.dart';
 import 'package:task_application/services/storage_service.dart';
 import 'package:task_application/widgets/vault_card.dart';
 import '../models/storage_item.dart';
@@ -18,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _loading = true;
 
   final StorageService _storageService = StorageService();
+  final StorageServicesPhone _phoneService = StorageServicesPhone();
 
   @override
   void initState() {
@@ -36,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: [
+        /*actions: [
           IconButton(
               onPressed: () {
                 () => showDialog(
@@ -44,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (_) => const SearchKeyValueDialog());
               },
               icon: const Icon(Icons.search, color: Colors.black))
-        ],
+        ],*/
       ),
       body: Center(
           child: _loading
@@ -59,16 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         //return VaultCard(item: _items[index]);//
                         return Dismissible(
-                          // 2
                           key: Key(_items[index].toString()),
                           child: VaultCard(item: _items[index]),
-                          // 3
                           onDismissed: (direction) async {
-                            // 4
                             await _storageService
                                 .deleteSecureData(_items[index])
                                 .then((value) => _items.removeAt(index));
-                            // 5
                             initList();
                           },
                         );
@@ -85,6 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     final StorageItem? newItem = await showDialog<StorageItem>(
                         context: context, builder: (_) => AddDataDialog());
                     if (newItem != null) {
+                      String phoneValue = newItem.value;
+                      // _phoneService.writeSecureData(phoneValue).catchError(
+                      //     (onError) => debugPrint(
+                      //         'Inside Home : $onError')); //?? phone addition
                       _storageService.writeSecureData(newItem).then((value) {
                         setState(() {
                           _loading = true;
@@ -102,6 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent),
                   onPressed: () async {
+                    // await _phoneService.deleteAllSecureData().catchError(
+                    //     (err) => debugPrint(
+                    //         'Inside home_view: $err')); //?? error for phone
                     _storageService
                         .deleteAllSecureData()
                         .then((value) => initList());

@@ -9,7 +9,7 @@ class StorageService {
       const AndroidOptions(encryptedSharedPreferences: true);
 
   Future<void> writeSecureData(StorageItem newItem) async {
-    debugPrint("Writing new data having key ${newItem.key}");
+    debugPrint("Writing new data  key ${newItem.key}");
     await _secureStorage.write(
         key: newItem.key, value: newItem.value, aOptions: _getAndroidOptions());
   }
