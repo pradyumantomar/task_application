@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-              onPressed: () async {
+              onPressed: () {
                 () => showDialog(
                     context: context,
                     builder: (_) => const SearchKeyValueDialog());
@@ -82,16 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () async {
-                    // 1
                     final StorageItem? newItem = await showDialog<StorageItem>(
                         context: context, builder: (_) => AddDataDialog());
                     if (newItem != null) {
-                      // 2
                       _storageService.writeSecureData(newItem).then((value) {
                         setState(() {
                           _loading = true;
                         });
-                        // 3
                         initList();
                       });
                     }
@@ -102,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orangeAccent),
                   onPressed: () async {
                     _storageService
                         .deleteAllSecureData()

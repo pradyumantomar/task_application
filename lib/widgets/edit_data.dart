@@ -38,6 +38,14 @@ class _EditDataDialogState extends State<EditDataDialog> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
+                      if (_valueController.text.length < 10 ||
+                          _valueController.text.length > 10) {
+                        return;
+                      } else if (!RegExp(
+                              r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                          .hasMatch(_valueController.text)) {
+                        return;
+                      }
                       Navigator.of(context).pop(_valueController.text);
                     },
                     child: const Text('Update')))

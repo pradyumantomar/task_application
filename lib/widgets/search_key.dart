@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/textfield_decoration.dart';
 import '../services/storage_service.dart';
+import '../widgets/textfield_decoration.dart';
 
 class SearchKeyValueDialog extends StatefulWidget {
   const SearchKeyValueDialog({Key? key}) : super(key: key);
@@ -12,11 +12,11 @@ class SearchKeyValueDialog extends StatefulWidget {
 class _SearchKeyValueDialogState extends State<SearchKeyValueDialog> {
   final TextEditingController _keyController = TextEditingController();
   final StorageService _storageService = StorageService();
-
   String? _value;
 
   @override
   Widget build(BuildContext context) {
+    // ref.watch(storageServiceProvider.notifier);
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -36,10 +36,10 @@ class _SearchKeyValueDialogState extends State<SearchKeyValueDialog> {
                       setState(() {});
                     },
                     child: const Text('Search'))),
-            _value == null
-                ? const SizedBox(child: Text('No Data Found'))
+            (_value == null)
+                ? const SizedBox()
                 : Text(
-                    'Number: $_value',
+                    'Value: $_value',
                   )
           ],
         ),
