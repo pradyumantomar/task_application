@@ -59,18 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       itemBuilder: (_, index) {
                         // delete part
-
                         //return VaultCard(item: _items[index]);//
-                        return Dismissible(
-                          key: Key(_items[index].toString()),
-                          child: VaultCard(item: _items[index]),
-                          onDismissed: (direction) async {
-                            await _storageService
-                                .deleteSecureData(_items[index])
-                                .then((value) => _items.removeAt(index));
-                            initList();
-                          },
-                        );
+                        if (_items[index].value != 'Yes') {
+                          return Dismissible(
+                            key: Key(_items[index].toString()),
+                            child: VaultCard(item: _items[index]),
+                            onDismissed: (direction) async {
+                              await _storageService
+                                  .deleteSecureData(_items[index])
+                                  .then((value) => _items.removeAt(index));
+                              initList();
+                            },
+                          );
+                        }
                       })),
       floatingActionButton: SizedBox(
         width: double.infinity,
@@ -85,9 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         context: context, builder: (_) => AddDataDialog());
                     if (newItem != null) {
                       String phoneValue = newItem.value;
-                      // _phoneService.writeSecureData(phoneValue).catchError(
-                      //     (onError) => debugPrint(
-                      //         'Inside Home : $onError')); //?? phone addition
+                      _phoneService.writeSecureData(phoneValue).catchError(
+                          (onError) => debugPrint(
+                              'Inside Home : $onError')); //?? phone addition
                       _storageService.writeSecureData(newItem).then((value) {
                         setState(() {
                           _loading = true;
@@ -105,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent),
                   onPressed: () async {
-                    // await _phoneService.deleteAllSecureData().catchError(
-                    //     (err) => debugPrint(
-                    //         'Inside home_view: $err')); //?? error for phone
+                    await _phoneService.deleteAllSecureData().catchError(
+                        (err) => debugPrint(
+                            'Inside home_view: $err')); //?? error for phone
                     _storageService
                         .deleteAllSecureData()
                         .then((value) => initList());

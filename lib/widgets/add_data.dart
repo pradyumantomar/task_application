@@ -46,70 +46,70 @@ class AddDataDialog extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () async {
-                      // if (_errorMessage.isNotEmpty) {
-                      //   await CustomAlertDialogBox.showCustomAlertBox(
-                      //     context: context,
-                      //     willDisplayWidget: Text(_errorMessage),
-                      //   );
-                      //   return;
-                      // } else if (_errorPhoneMessage.isNotEmpty) {
-                      //   await CustomAlertDialogBox.showCustomAlertBox(
-                      //     context: context,
-                      //     willDisplayWidget: Text(_errorPhoneMessage),
-                      //   );
-                      //   return;
-                      // } else if (_keyController.text == "") {
-                      //   await CustomAlertDialogBox.showCustomAlertBox(
-                      //     context: context,
-                      //     willDisplayWidget:
-                      //         const Text('Please Input Email Address'),
-                      //   );
-                      //   return;
-                      // } else if (_valueController.text == "") {
-                      //   await CustomAlertDialogBox.showCustomAlertBox(
-                      //     context: context,
-                      //     willDisplayWidget:
-                      //         const Text('Please Input Phone Number'),
-                      //   );
-                      //   return;
-                      // } else {
-                      //   _value = await _storageService
-                      //       .readSecureData(_keyController.text);
-                      //   _phone = await _phoneService
-                      //       .readSecureData(_valueController.text);
 
-                      //   // debugPrint('$_phoneExist');
-                      //   // debugPrint(_phone);
-                      //   // debugPrint(_value);
+                      if (_errorMessage.isNotEmpty) {
+                        await CustomAlertDialogBox.showCustomAlertBox(
+                          context: context,
+                          willDisplayWidget: Text(_errorMessage),
+                        );
+                        return;
+                      } else if (_errorPhoneMessage.isNotEmpty) {
+                        await CustomAlertDialogBox.showCustomAlertBox(
+                          context: context,
+                          willDisplayWidget: Text(_errorPhoneMessage),
+                        );
+                        return;
+                      } else if (_keyController.text == "") {
+                        await CustomAlertDialogBox.showCustomAlertBox(
+                          context: context,
+                          willDisplayWidget:
+                              const Text('Please Input Email Address'),
+                        );
+                        return;
+                      } else if (_valueController.text == "") {
+                        await CustomAlertDialogBox.showCustomAlertBox(
+                          context: context,
+                          willDisplayWidget:
+                              const Text('Please Input Phone Number'),
+                        );
+                        return;
+                      } else {
+                        _value = await _storageService
+                            .readSecureData(_keyController.text);
+                        _phone = await _phoneService
+                            .readSecureData(_valueController.text);
 
-                      //   if (_value != null || _value == _valueController.text) {
-                      //     // ignore: use_build_context_synchronously
-                      //     await CustomAlertDialogBox.showCustomAlertBox(
-                      //       context: context,
-                      //       willDisplayWidget:
-                      //           const Text('Email is Already Exist'),
-                      //     );
-                      //     return;
-                      //   }
-                      //   // _phoneExist = await _phoneService
-                      //   //     .containsKeyInSecureData(_valueController.text);
+                        // debugPrint('$_phoneExist');
+                        // debugPrint(_phone);
+                        // debugPrint(_value);
 
-                      //   // if (_phoneExist == true ||
-                      //   //     _phone == 'Yes' ||
-                      //   //     _phone != null) {
-                      //   //   debugPrint('Duplicate number ');
-                      //   //   debugPrint('$_phoneExist');
-                      //   //   debugPrint(_phone);
-                      //   //   // ignore: use_build_context_synchronously
-                      //   //   await CustomAlertDialogBox.showCustomAlertBox(
-                      //   //     context: context,
-                      //   //     willDisplayWidget:
-                      //   //         const Text('Phone is Already Exist'),
-                      //   //   );
-                      //   //   return;
-                      //   // }
-                      // }
+                        if (_value != null || _value == _valueController.text) {
+                          // ignore: use_build_context_synchronously
+                          await CustomAlertDialogBox.showCustomAlertBox(
+                            context: context,
+                            willDisplayWidget:
+                                const Text('Email is Already Exist'),
+                          );
+                          return;
+                        }
+                        _phoneExist = await _phoneService
+                            .containsKeyInSecureData(_valueController.text);
 
+                        if (_phoneExist == true ||
+                            _phone == 'Yes' ||
+                            _phone != null) {
+                          debugPrint('Duplicate number ');
+                          debugPrint('$_phoneExist');
+                          debugPrint(_phone);
+                          // ignore: use_build_context_synchronously
+                          await CustomAlertDialogBox.showCustomAlertBox(
+                            context: context,
+                            willDisplayWidget:
+                                const Text('Phone is Already Exist'),
+                          );
+                          return;
+                        }
+                      }
                       final StorageItem storageItem = StorageItem(
                           _keyController.text, _valueController.text);
 

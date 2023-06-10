@@ -15,7 +15,6 @@ class EditDataDialog extends StatefulWidget {
 }
 
 class _EditDataDialogState extends State<EditDataDialog> {
-  // late TextEditingController _keyController;
   late TextEditingController _valueController;
   final StorageServicesPhone _phoneService = StorageServicesPhone();
   String? _phone;
