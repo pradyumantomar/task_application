@@ -46,16 +46,18 @@ class _VaultCardState extends State<VaultCard> {
                 });
               },
               title: Text(
-                'Email: ${widget.item.key}',
+                '${widget.item.key}',
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 22,
                 ),
               ),
               subtitle: Visibility(
                 visible: _visibility,
                 child: Text(
-                  'Number: ${widget.item.value}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  // '{widget.item.value}',
+                  '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 10),
                 ),
               ),
               leading: Icon(iconList[rn], color: colorList[rn], size: 30),

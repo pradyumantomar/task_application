@@ -60,18 +60,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemBuilder: (_, index) {
                         // delete part
                         //return VaultCard(item: _items[index]);//
-                        if (_items[index].value != 'Yes') {
-                          return Dismissible(
-                            key: Key(_items[index].toString()),
-                            child: VaultCard(item: _items[index]),
-                            onDismissed: (direction) async {
-                              await _storageService
-                                  .deleteSecureData(_items[index])
-                                  .then((value) => _items.removeAt(index));
-                              initList();
-                            },
-                          );
-                        }
+                        return Dismissible(
+                          key: Key(_items[index].toString()),
+                          child: VaultCard(item: _items[index]),
+                          onDismissed: (direction) async {
+                            await _storageService
+                                .deleteSecureData(_items[index])
+                                .then((value) => _items.removeAt(index));
+                            initList();
+                          },
+                        );
                       })),
       floatingActionButton: SizedBox(
         width: double.infinity,
@@ -97,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     }
                   },
-                  child: const Text("Add Data"),
+                  child: const Text("Sign Up"),
                 ),
               ),
               const SizedBox(width: 8),
@@ -107,8 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor: Colors.orangeAccent),
                   onPressed: () async {
                     await _phoneService.deleteAllSecureData().catchError(
-                        (err) => debugPrint(
-                            'Inside home_view: $err')); //?? error for phone
+                        (err) => debugPrint('Inside home_view: $err'));
                     _storageService
                         .deleteAllSecureData()
                         .then((value) => initList());
